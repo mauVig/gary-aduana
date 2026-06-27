@@ -6,21 +6,27 @@ export default function TrustBar() {
   const ref = useScrollReveal()
 
   return (
-    <section
-      className="min-h-screen flex items-center relative overflow-hidden"
-      style={{ background: 'linear-gradient(160deg, #0d2340 0%, #15355c 50%, #1a3f6e 100%)' }}
-    >
-      {/* Subtle grid pattern */}
+    <section className="min-h-screen flex items-center relative overflow-hidden">
+      {/* Layered gradient background with depth */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0"
         style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg, transparent, transparent 80px, rgba(255,255,255,1) 80px, rgba(255,255,255,1) 81px
-          ), repeating-linear-gradient(
-            90deg, transparent, transparent 80px, rgba(255,255,255,1) 80px, rgba(255,255,255,1) 81px
-          )`,
+          background: `
+            radial-gradient(ellipse 70% 50% at 75% 15%, rgba(252,113,20,0.055) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 60% at 10% 90%, rgba(26,63,110,0.5) 0%, transparent 55%),
+            radial-gradient(ellipse 90% 80% at 50% 50%, rgba(21,53,92,0.35) 0%, transparent 70%),
+            linear-gradient(170deg, #081829 0%, #0d2340 20%, #15355c 50%, #1c4573 75%, #0f2a4a 100%)
+          `,
         }}
       />
+
+      {/* SVG grain overlay to eliminate banding */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.028]" aria-hidden="true">
+        <filter id="trustbar-grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#trustbar-grain)" />
+      </svg>
 
       <div ref={ref} className="reveal relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Section header */}
@@ -173,12 +179,6 @@ export default function TrustBar() {
           </div>
         </div>
       </div>
-
-      {/* Bottom fade */}
-      <div
-        className="absolute bottom-0 inset-x-0 h-24 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #f8fafc)' }}
-      />
     </section>
   )
 }

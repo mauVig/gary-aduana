@@ -1,6 +1,5 @@
+import { Suspense } from 'react'
 import Navbar from '@/components/Navbar'
-import PageBanner from '@/components/PageBanner'
-import FAQ from '@/components/FAQ'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
@@ -13,13 +12,9 @@ export default function ContactoPage() {
   return (
     <main>
       <Navbar />
-      <PageBanner
-        eyebrow="Contacto"
-        title="Contanos tu operación"
-        subtitle="Completá el formulario y uno de nuestros especialistas te contactará dentro de las 24 horas hábiles."
-      />
-      <FAQ />
-      <Contact />
+      <Suspense fallback={null}>
+        <Contact />
+      </Suspense>
       <Footer />
     </main>
   )

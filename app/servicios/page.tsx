@@ -13,9 +13,9 @@ export default function ServiciosPage() {
     <main>
       <Navbar />
       <PageBanner
-        eyebrow="Nuestros servicios"
-        title="Gestión integral de comercio exterior"
-        subtitle="Cubrimos todas las etapas de tu operación con precisión, cumplimiento normativo y comunicación en tiempo real."
+        eyebrow="Estudio Aduanero Gary"
+        title="Servicios"
+        image="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&h=600&fit=crop&auto=format"
       />
       <Services />
       <Footer />

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Mail, Phone, MapPin, Send, Paperclip } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { Mail, MapPin, Send, Paperclip } from 'lucide-react'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 
 type FormData = {
@@ -19,6 +20,9 @@ const inputClass =
 
 export default function Contact() {
   const ref = useScrollReveal()
+  const searchParams = useSearchParams()
+  const servicioParam = searchParams.get('servicio')
+
   const [form, setForm] = useState<FormData>({
     nombre: '', email: '', telefono: '', mercaderia: '',
     estado: '', origen: '', procedencia: '', catalogo: null,
@@ -121,6 +125,24 @@ export default function Contact() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Banner servicio seleccionado */}
+                  {servicioParam && (
+                    <div
+                      className="flex items-center gap-3 px-5 py-4 rounded-xl"
+                      style={{ background: 'rgba(252,113,20,0.08)', border: '1.5px solid rgba(252,113,20,0.35)' }}
+                    >
+                      <div
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ background: '#fc7114' }}
+                      />
+                      <p className="text-sm text-slate-700">
+                        Consultando sobre:{' '}
+                        <span className="font-black" style={{ color: '#fc7114' }}>
+                          {servicioParam}
+                        </span>
+                      </p>
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-xs font-semibold text-slate-600 mb-1.5">

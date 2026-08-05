@@ -11,8 +11,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
+
+/* Hide native scrollbar — replaced by custom Lenis scrollbar */
+html::-webkit-scrollbar { display: none; }
+html { scrollbar-width: none; -ms-overflow-style: none; }
 
 @layer base {
   body {

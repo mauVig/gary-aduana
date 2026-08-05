@@ -89,7 +89,7 @@ export default function FAQ() {
         {/* Bottom CTA */}
         <div className="mt-12 text-center">
           <p className="text-slate-500 mb-4">¿Tenés otra consulta?</p>
-          <a href="#contacto" className="btn-navy text-sm px-6 py-3 inline-flex items-center gap-2">
+          <a href="/contacto" className="btn-navy text-sm px-6 py-3 inline-flex items-center gap-2">
             Hablá con nuestro equipo
           </a>
         </div>

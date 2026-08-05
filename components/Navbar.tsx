@@ -22,18 +22,41 @@ export default function Navbar() {
 
   return (
     <header
-      className="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white border-b border-slate-100"
-      style={{ boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.08)' : 'none' }}
+      className="fixed z-50"
+      style={{
+        top: scrolled ? '12px' : '0px',
+        left: scrolled ? '20px' : '0px',
+        right: scrolled ? '20px' : '0px',
+        borderRadius: scrolled ? '14px' : '0px',
+        background: scrolled ? 'rgba(255,255,255,0.55)' : '#ffffff',
+        backdropFilter: scrolled ? 'blur(24px) saturate(1.4)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(1.4)' : 'none',
+        boxShadow: scrolled
+          ? '0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)'
+          : '0 1px 0 rgba(0,0,0,0.06)',
+        borderBottom: scrolled ? 'none' : '1px solid rgba(0,0,0,0.06)',
+        transition: 'top 0.5s cubic-bezier(0.4,0,0.2,1), left 0.5s cubic-bezier(0.4,0,0.2,1), right 0.5s cubic-bezier(0.4,0,0.2,1), border-radius 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1), background 0.5s cubic-bezier(0.4,0,0.2,1)',
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div
+          className="flex items-center justify-between"
+          style={{
+            height: scrolled ? '42px' : '64px',
+            transition: 'height 0.5s cubic-bezier(0.4,0,0.2,1)',
+          }}
+        >
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
             <img
               src="/logo.svg"
               alt="Estudio Aduanero Gary"
-              className="h-10 w-auto"
               loading="eager"
+              style={{
+                height: scrolled ? '28px' : '34px',
+                width: 'auto',
+                transition: 'height 0.5s cubic-bezier(0.4,0,0.2,1)',
+              }}
             />
           </Link>
 
@@ -43,15 +66,26 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors duration-150"
+                className="font-semibold transition-colors duration-150"
+                style={{
+                  fontSize: scrolled ? '13px' : '14px',
+                  color: scrolled ? '#0f1923' : '#475569',
+                  textShadow: scrolled ? '0 1px 4px rgba(255,255,255,0.9)' : 'none',
+                  transition: 'font-size 0.5s cubic-bezier(0.4,0,0.2,1), color 0.5s cubic-bezier(0.4,0,0.2,1), text-shadow 0.5s cubic-bezier(0.4,0,0.2,1)',
+                }}
               >
                 {l.label}
               </Link>
             ))}
             <Link
               href="/contacto"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:shadow-md"
-              style={{ background: '#15355c' }}
+              className="inline-flex items-center gap-2 rounded-lg font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:shadow-md"
+              style={{
+                background: '#15355c',
+                fontSize: scrolled ? '13px' : '14px',
+                padding: scrolled ? '7px 16px' : '10px 20px',
+                transition: 'font-size 0.5s cubic-bezier(0.4,0,0.2,1), padding 0.5s cubic-bezier(0.4,0,0.2,1)',
+              }}
             >
               Consultá gratis
             </Link>
@@ -71,7 +105,14 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-white border-t border-slate-100">
+        <div
+          className="md:hidden border-t border-slate-100"
+          style={{
+            background: scrolled ? 'rgba(255,255,255,0.55)' : '#ffffff',
+            borderBottomLeftRadius: scrolled ? '14px' : '0px',
+            borderBottomRightRadius: scrolled ? '14px' : '0px',
+          }}
+        >
           <div className="px-4 py-4 flex flex-col gap-3">
             {navLinks.map((l) => (
               <Link

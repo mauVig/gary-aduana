@@ -1,5 +1,4 @@
 'use client'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
 
 const stats = [
   {
@@ -31,16 +30,12 @@ const stats = [
 
 
 export default function TrustBar() {
-  const refLeft = useScrollReveal()
-  const refRight = useScrollReveal()
-
   return (
     <section className="flex flex-col lg:flex-row min-h-screen">
 
       {/* ── Panel izquierdo — naranja ──────────────────────────── */}
       <div
-        ref={refLeft}
-        className="reveal lg:w-[42%] flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24 relative overflow-hidden"
+        className="lg:w-[42%] flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24 relative overflow-hidden"
         style={{ background: '#fc7114' }}
       >
         <div
@@ -83,8 +78,7 @@ export default function TrustBar() {
 
       {/* ── Panel derecho — navy ───────────────────────────────── */}
       <div
-        ref={refRight}
-        className="reveal reveal-delay-1 lg:flex-1 flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24"
+        className="lg:flex-1 flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24"
         style={{ background: '#0c1f35' }}
       >
         <div className="mb-14">

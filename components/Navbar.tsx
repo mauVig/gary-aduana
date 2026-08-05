@@ -2,15 +2,16 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const navLinks = [
   { label: 'Inicio', href: '/' },
   { label: 'Quiénes Somos', href: '/nosotros' },
   { label: 'Servicios', href: '/servicios' },
-  { label: 'Contacto', href: '/contacto' },
 ]
 
 export default function Navbar() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -62,21 +63,35 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="font-semibold transition-colors duration-150"
-                style={{
-                  fontSize: scrolled ? '13px' : '14px',
-                  color: scrolled ? '#0f1923' : '#475569',
-                  textShadow: scrolled ? '0 1px 4px rgba(255,255,255,0.9)' : 'none',
-                  transition: 'font-size 0.5s cubic-bezier(0.4,0,0.2,1), color 0.5s cubic-bezier(0.4,0,0.2,1), text-shadow 0.5s cubic-bezier(0.4,0,0.2,1)',
-                }}
-              >
-                {l.label}
-              </Link>
-            ))}
+            {navLinks.map((l) => {
+              const active = pathname === l.href
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="relative inline-flex items-center transition-all duration-200"
+                  style={{
+                    fontSize: scrolled ? '13px' : '14px',
+                    fontWeight: active ? 800 : 600,
+                    color: active ? '#0f1923' : scrolled ? '#0f1923' : '#475569',
+                  }}
+                >
+                  {l.label}
+                  <span
+                    className="absolute rounded-full transition-all duration-200"
+                    style={{
+                      left: '50%',
+                      bottom: '-10px',
+                      transform: 'translateX(-50%)',
+                      width: active ? '4px' : '0px',
+                      height: '4px',
+                      background: '#fc7114',
+                      opacity: active ? 1 : 0,
+                    }}
+                  />
+                </Link>
+              )
+            })}
             <Link
               href="/contacto"
               className="inline-flex items-center gap-2 rounded-lg font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:shadow-md"
@@ -87,7 +102,7 @@ export default function Navbar() {
                 transition: 'font-size 0.5s cubic-bezier(0.4,0,0.2,1), padding 0.5s cubic-bezier(0.4,0,0.2,1)',
               }}
             >
-              Consultá gratis
+              Contacto
             </Link>
           </nav>
 
@@ -114,23 +129,30 @@ export default function Navbar() {
           }}
         >
           <div className="px-4 py-4 flex flex-col gap-3">
-            {navLinks.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="text-slate-700 hover:text-slate-900 py-2 text-base font-medium transition-colors"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {navLinks.map((l) => {
+              const active = pathname === l.href
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 py-2 text-base font-semibold transition-colors"
+                  style={{ color: active ? '#fc7114' : '#475569' }}
+                >
+                  {active && (
+                    <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: '#fc7114' }} />
+                  )}
+                  {l.label}
+                </Link>
+              )
+            })}
             <Link
               href="/contacto"
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold text-white mt-2 transition-all duration-200"
               style={{ background: '#15355c' }}
             >
-              Consultá gratis
+              Contacto
             </Link>
           </div>
         </div>

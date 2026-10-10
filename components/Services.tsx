@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 
@@ -72,6 +73,11 @@ export default function Services() {
     <section className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+        {/* Encabezado de sección: la página saltaba del h1 del banner
+            directamente a los h3 de cada tarjeta. Va oculto visualmente
+            porque el banner ya dice "Servicios". */}
+        <h2 className="sr-only">Nuestros servicios de comercio exterior</h2>
+
         <div ref={ref} className="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map(({ name, desc, details, img }, i) => (
             <div
@@ -81,10 +87,15 @@ export default function Services() {
             >
               {/* Imagen con overlay y nombre */}
               <div className="relative h-44 overflow-hidden">
-                <img
+                {/* alt vacío a propósito: la imagen es ilustrativa y el h3 de
+                    abajo ya dice el nombre del servicio. Con alt={name} el
+                    lector de pantalla lo anunciaba dos veces seguidas. */}
+                <Image
                   src={img}
-                  alt={name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  alt=""
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 {/* Gradient overlay */}
                 <div
@@ -142,6 +153,9 @@ export default function Services() {
               <div className="px-6 pb-6 bg-white">
                 <Link
                   href={`/contacto?servicio=${encodeURIComponent(name)}`}
+                  /* Los 10 botones dicen solo "Contactar": al listar los
+                     enlaces de la página eran indistinguibles entre sí. */
+                  aria-label={`Contactar por ${name}`}
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
                   style={{ background: 'linear-gradient(135deg, #15355c, #0d2340)' }}
                 >

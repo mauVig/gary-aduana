@@ -1,5 +1,6 @@
 'use client'
 import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Hero() {
@@ -8,10 +9,18 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-screen flex flex-col justify-end overflow-hidden"
     >
-      {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-port.jpg')" }}
+      {/* Imagen de fondo. Antes era un background-image de CSS: el navegador
+          no la descubría hasta parsear la hoja de estilos, y es la imagen que
+          define el LCP de la home. Con next/image + priority se precarga y se
+          sirve en AVIF/WebP con tamaños responsivos. */}
+      <Image
+        src="/hero-port.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        quality={78}
+        className="object-cover object-center"
       />
 
       {/* Dark overlay — navy tinted, heavier at bottom for text legibility */}

@@ -1,24 +1,31 @@
 'use client'
+import { Building2 } from 'lucide-react'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 
+/**
+ * Testimonios anonimizados: se identifican por rubro y antigüedad, sin nombre
+ * de empresa. Atribuir una cita textual a una marca de terceros requiere
+ * autorización escrita, y publicar la cita sin ese respaldo es una exposición
+ * legal innecesaria. El rubro conserva la prueba social sin ese riesgo.
+ */
 const testimonials = [
   {
-    quote: 'Trabajamos con el Estudio Gary hace más de diez años. Cada importación que hicimos —desde pinturas hasta maquinaria— llegó a tiempo y sin contratiempos. Es el tipo de respaldo que una empresa necesita para crecer.',
-    company: 'Pinturerías Rex',
-    industry: 'Distribución de pinturas',
-    initial: 'R',
+    quote:
+      'Trabajamos con el Estudio Gary hace más de diez años. Cada importación que hicimos —desde pinturas hasta maquinaria— llegó a tiempo y sin contratiempos. Es el tipo de respaldo que una empresa necesita para crecer.',
+    perfil: 'Distribuidora de pinturas',
+    relacion: 'Cliente desde hace más de 10 años',
   },
   {
-    quote: 'En Tektronik importamos equipos electrónicos con clasificaciones arancelarias muy específicas. El equipo de Gary domina cada detalle normativo y nos ahorra tiempo y problemas en cada operación.',
-    company: 'Tektronik',
-    industry: 'Tecnología',
-    initial: 'T',
+    quote:
+      'Importamos equipos electrónicos con clasificaciones arancelarias muy específicas. Dominan cada detalle normativo y nos ahorran tiempo y problemas en cada operación.',
+    perfil: 'Importador de tecnología',
+    relacion: 'Operaciones recurrentes',
   },
   {
-    quote: 'Lo que más valoramos es la comunicación directa. En cada despacho sabemos exactamente en qué etapa está nuestra mercadería y qué esperar. Eso en el comercio exterior no es fácil de encontrar.',
-    company: 'Liefrink & Marx',
-    industry: 'Distribución',
-    initial: 'L',
+    quote:
+      'Lo que más valoramos es la comunicación directa. En cada despacho sabemos exactamente en qué etapa está nuestra mercadería y qué esperar. Eso en el comercio exterior no es fácil de encontrar.',
+    perfil: 'Empresa de distribución',
+    relacion: 'Despachos mensuales',
   },
 ]
 
@@ -64,9 +71,9 @@ export default function Testimonials() {
 
         {/* Cards */}
         <div ref={ref2} className="reveal grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map(({ quote, company, industry, initial }, i) => (
+          {testimonials.map(({ quote, perfil, relacion }, i) => (
             <div
-              key={company}
+              key={perfil}
               className={`reveal-delay-${i + 1} relative flex flex-col p-8 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] transition-colors duration-300`}
             >
               {/* Giant quote mark */}
@@ -83,14 +90,15 @@ export default function Testimonials() {
 
               <div className="flex items-center gap-4 border-t border-white/10 pt-6">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: 'rgba(252,113,20,0.2)' }}
+                  aria-hidden="true"
                 >
-                  {initial}
+                  <Building2 size={18} style={{ color: '#fc7114' }} />
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">{company}</p>
-                  <p className="text-white/40 text-xs">{industry}</p>
+                  <p className="text-white font-semibold text-sm">{perfil}</p>
+                  <p className="text-white/40 text-xs">{relacion}</p>
                 </div>
               </div>
             </div>

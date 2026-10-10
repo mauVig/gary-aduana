@@ -38,7 +38,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-white font-semibold mb-5 text-sm tracking-wide">Secciones</h4>
+            <h2 className="text-white font-semibold mb-5 text-sm tracking-wide">Secciones</h2>
             <ul className="space-y-3">
               {navLinks.map((l) => (
                 <li key={l.href}>
@@ -55,7 +55,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold mb-5 text-sm tracking-wide">Servicios</h4>
+            <h2 className="text-white font-semibold mb-5 text-sm tracking-wide">Servicios</h2>
             <ul className="space-y-3">
               {services.map((s) => (
                 <li key={s}>
@@ -73,9 +73,17 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/30 text-xs">
-            © {new Date().getFullYear()} Estudio Aduanero Gary. Todos los derechos reservados.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="text-white/30 text-xs">
+              © {new Date().getFullYear()} Estudio Aduanero Gary. Todos los derechos reservados.
+            </p>
+            <Link
+              href="/privacidad"
+              className="text-white/40 hover:text-white/70 text-xs underline underline-offset-2 transition-colors duration-150"
+            >
+              Política de Privacidad
+            </Link>
+          </div>
           <div className="flex items-center gap-2">
             <span
               className="inline-block w-2 h-2 rounded-full"

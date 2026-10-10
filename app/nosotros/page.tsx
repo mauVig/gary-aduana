@@ -1,9 +1,27 @@
-'use client';
-
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
-import { ZoomParallax } from '@/components/ui/zoom-parallax'
+import ZoomParallaxLazy from '@/components/ui/zoom-parallax-lazy'
 import AboutStory from '@/components/AboutStory'
-import Footer from '@/components/Footer'
+import FooterParallax from '@/components/FooterParallax'
+import JsonLd from '@/components/JsonLd'
+import { breadcrumbSchema } from '@/lib/schema'
+
+// Esta página no lleva 'use client': cada hijo interactivo (ZoomParallax,
+// AboutStory, Navbar, FooterParallax) ya declara el suyo. Siendo server
+// component puede exportar metadata propia, que es lo que antes le faltaba.
+export const metadata: Metadata = {
+  title: 'Quiénes somos',
+  description:
+    'Estudio familiar de despachantes de aduana fundado en 1994. Tres décadas acompañando operaciones de comercio exterior de PyMEs y nuevos importadores en Argentina.',
+  alternates: { canonical: '/nosotros' },
+  openGraph: {
+    title: 'Quiénes somos | Estudio Aduanero Gary',
+    description:
+      'Estudio familiar de despachantes de aduana fundado en 1994. Tres décadas acompañando operaciones de comercio exterior en Argentina.',
+    url: '/nosotros',
+    images: ['/opengraph-image.png'],
+  },
+}
 
 const images = [
   {
@@ -38,11 +56,22 @@ const images = [
 
 export default function NosotrosPage() {
   return (
-    <main>
+    <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: 'Inicio', path: '/' },
+          { name: 'Quiénes somos', path: '/nosotros' },
+        ])}
+      />
       <Navbar />
-      <ZoomParallax images={images} />
-      <AboutStory />
-      <Footer />
-    </main>
+      <main id="contenido">
+      {/* Contenido — por encima del footer en parallax */}
+      <div className="relative z-10 bg-white">
+        <ZoomParallaxLazy images={images} />
+        <AboutStory />
+      </div>
+      </main>
+      <FooterParallax />
+    </>
   )
 }

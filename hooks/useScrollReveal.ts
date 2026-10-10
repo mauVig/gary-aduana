@@ -1,7 +1,14 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
-export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
+type RevealOptions = {
+  threshold?: number
+  rootMargin?: string
+}
+
+export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
+  { threshold = 0.12, rootMargin = '0px' }: RevealOptions = {}
+) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -15,11 +22,11 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
           observer.disconnect()
         }
       },
-      { threshold: 0.12 }
+      { threshold, rootMargin }
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [threshold, rootMargin])
 
   return ref
 }

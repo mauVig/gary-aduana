@@ -41,12 +41,14 @@ export default function AboutStory() {
             >
               Nuestra historia
             </p>
-            <h2
+            {/* h1 de /nosotros — misma apariencia que antes, pero es el
+                encabezado principal de la página, que no tenía ninguno */}
+            <h1
               className="font-black text-white leading-tight mb-8"
               style={{ fontSize: 'clamp(28px, 4vw, 48px)', letterSpacing: '-0.02em' }}
             >
               Tres décadas construyendo confianza en cada operación.
-            </h2>
+            </h1>
             <div className="space-y-5" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '15px', lineHeight: 1.8 }}>
               <p>
                 El Estudio Aduanero Gary nació en 1994 de la mano de Guillermo Gary, con una convicción clara: que el comercio exterior argentino necesitaba profesionales que acompañaran a las empresas de verdad, no solo que firmaran papeles.

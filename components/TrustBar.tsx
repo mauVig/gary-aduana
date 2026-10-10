@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal } from '@/hooks/useScrollReveal'
+
 const stats = [
   {
     num: '+30',
@@ -30,12 +32,16 @@ const stats = [
 
 
 export default function TrustBar() {
+  const orangeRef = useScrollReveal()
+  const navyRef = useScrollReveal()
+
   return (
     <section className="flex flex-col lg:flex-row min-h-screen">
 
       {/* ── Panel izquierdo — naranja ──────────────────────────── */}
       <div
-        className="lg:w-[42%] flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24 relative overflow-hidden"
+        ref={orangeRef}
+        className="reveal-fade reveal-group lg:w-[42%] flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24 relative overflow-hidden"
         style={{ background: '#fc7114' }}
       >
         <div
@@ -46,14 +52,14 @@ export default function TrustBar() {
         />
 
         <div className="relative">
-          <p className="text-xs font-bold tracking-[0.25em] uppercase mb-12"
+          <p className="reveal-item text-xs font-bold tracking-[0.25em] uppercase mb-12"
             style={{ color: 'rgba(255,255,255,0.55)' }}>
             Por qué elegirnos
           </p>
 
           <div className="flex flex-col gap-10">
             {stats.map((s, i) => (
-              <div key={i}>
+              <div key={i} className={`reveal-item reveal-delay-${i + 2}`}>
                 <div
                   className="font-black leading-none tracking-tight"
                   style={{
@@ -78,10 +84,11 @@ export default function TrustBar() {
 
       {/* ── Panel derecho — navy ───────────────────────────────── */}
       <div
-        className="lg:flex-1 flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24"
+        ref={navyRef}
+        className="reveal-group lg:flex-1 flex flex-col justify-center px-10 py-20 lg:px-16 lg:py-24"
         style={{ background: '#0c1f35' }}
       >
-        <div className="mb-14">
+        <div className="reveal-item mb-14">
           <h2
             className="font-bold leading-tight tracking-tight"
             style={{ fontSize: 'clamp(28px,4vw,48px)', color: '#fff' }}
@@ -97,7 +104,7 @@ export default function TrustBar() {
           {stats.map((s, i) => (
             <div
               key={i}
-              className="py-8 flex flex-col gap-2"
+              className={`reveal-item reveal-delay-${i + 2} py-8 flex flex-col gap-2`}
               style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
             >
               {s.body && (

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -14,12 +14,38 @@ export default function Navbar() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Menú mobile: cerrar con Escape y devolver el foco al botón, para no
+  // dejar al usuario de teclado perdido al final del documento.
+  useEffect(() => {
+    if (!open) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    // El primer enlace recibe el foco al abrir
+    panelRef.current?.querySelector<HTMLElement>('a')?.focus()
+
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
+  // Cierra el panel al cambiar de ruta
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
 
   return (
     <header
@@ -62,7 +88,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav aria-label="Menú principal" className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => {
               const active = pathname === l.href
               return (
@@ -108,19 +134,26 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
+            ref={toggleRef}
+            type="button"
             className="md:hidden p-2"
             style={{ color: '#15355c' }}
             onClick={() => setOpen(!open)}
-            aria-label="Menú"
+            aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div
+        <nav
+          id="menu-mobile"
+          ref={panelRef}
+          aria-label="Menú principal"
           className="md:hidden border-t border-slate-100"
           style={{
             background: scrolled ? 'rgba(255,255,255,0.55)' : '#ffffff',
@@ -155,7 +188,7 @@ export default function Navbar() {
               Contacto
             </Link>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   )

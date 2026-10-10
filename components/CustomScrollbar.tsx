@@ -79,9 +79,14 @@ export default function CustomScrollbar({ lenis }: Props) {
   }
 
   return (
+    /* aria-hidden: es un duplicado visual de la barra de scroll nativa,
+       operable solo con mouse. El teclado ya desplaza la página con las
+       flechas y AvPág sin necesidad de este control, así que exponerlo al
+       lector de pantalla solo agregaría ruido. */
     <div
       ref={trackRef}
       onClick={onTrackClick}
+      aria-hidden="true"
       className="fixed top-0 right-0 z-[9999] w-[10px] h-screen"
       style={{ background: 'rgba(0,0,0,0.06)' }}
     >

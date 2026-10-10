@@ -33,6 +33,53 @@ const steps = [
   },
 ]
 
+type Step = (typeof steps)[number]
+
+function StepRow({ num, icon: Icon, title, tag, desc }: Step) {
+  // Se pinta cuando la fila cruza el 55% de la altura de pantalla
+  const ref = useScrollReveal({ threshold: 0, rootMargin: '0px 0px -45% 0px' })
+
+  return (
+    <div
+      ref={ref}
+      className="step-row group grid grid-cols-[auto_1fr] md:grid-cols-[6rem_1fr_auto] items-start gap-6 md:gap-10 py-10 border-b border-white/[0.08] hover:bg-white/[0.02] transition-colors duration-300 px-2"
+    >
+      {/* Number */}
+      <div className="flex flex-col items-start pt-1">
+        <span className="step-num text-5xl md:text-6xl font-black tracking-tighter leading-none">
+          {num}
+        </span>
+        {/* Orange bar — crece junto con el número */}
+        <div className="step-bar h-[2px] mt-2" style={{ background: '#fc7114' }} />
+      </div>
+
+      {/* Content */}
+      <div>
+        {/* Tag */}
+        <p className="text-xs font-mono tracking-widest text-white/25 mb-3 uppercase">
+          {tag}
+        </p>
+        <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
+          {title}
+        </h3>
+        <p className="text-white/45 text-sm leading-relaxed max-w-2xl">
+          {desc}
+        </p>
+      </div>
+
+      {/* Icon — hidden on mobile, shown on desktop */}
+      <div className="hidden md:flex items-center justify-center self-center">
+        <div
+          className="w-14 h-14 rounded-2xl flex items-center justify-center border border-white/10 transition-all duration-300 group-hover:border-white/20 group-hover:scale-110"
+          style={{ background: 'rgba(252,113,20,0.08)' }}
+        >
+          <Icon size={22} style={{ color: '#fc7114' }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function HowItWorks() {
   const ref = useScrollReveal()
 
@@ -73,50 +120,8 @@ export default function HowItWorks() {
 
         {/* Steps — full-width rows */}
         <div className="border-t border-white/[0.08]">
-          {steps.map(({ num, icon: Icon, title, tag, desc }, i) => (
-            <div
-              key={num}
-              className="group grid grid-cols-[auto_1fr] md:grid-cols-[6rem_1fr_auto] items-start gap-6 md:gap-10 py-10 border-b border-white/[0.08] hover:bg-white/[0.02] transition-colors duration-300 px-2"
-            >
-              {/* Number */}
-              <div className="flex flex-col items-start pt-1">
-                <span
-                  className="text-5xl md:text-6xl font-black tracking-tighter leading-none transition-colors duration-300"
-                  style={{ color: i === 0 ? '#fc7114' : 'rgba(255,255,255,0.15)' }}
-                >
-                  {num}
-                </span>
-                {/* Orange bar — active on first, slides in on hover for others */}
-                <div
-                  className={`h-[2px] mt-2 transition-all duration-500 ${i === 0 ? 'w-8' : 'w-0 group-hover:w-8'}`}
-                  style={{ background: '#fc7114' }}
-                />
-              </div>
-
-              {/* Content */}
-              <div>
-                {/* Tag */}
-                <p className="text-xs font-mono tracking-widest text-white/25 mb-3 uppercase">
-                  {tag}
-                </p>
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
-                  {title}
-                </h3>
-                <p className="text-white/45 text-sm leading-relaxed max-w-2xl">
-                  {desc}
-                </p>
-              </div>
-
-              {/* Icon — hidden on mobile, shown on desktop */}
-              <div className="hidden md:flex items-center justify-center self-center">
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center border border-white/10 transition-all duration-300 group-hover:border-white/20 group-hover:scale-110"
-                  style={{ background: 'rgba(252,113,20,0.08)' }}
-                >
-                  <Icon size={22} style={{ color: '#fc7114' }} />
-                </div>
-              </div>
-            </div>
+          {steps.map((step) => (
+            <StepRow key={step.num} {...step} />
           ))}
         </div>
       </div>

@@ -33,8 +33,13 @@ export default function PageBanner({ eyebrow, title, subtitle }: PageBannerProps
         }}
       />
 
-      {/* Sello aduanero ghost — derecha */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none" style={{ opacity: 0.10 }}>
+      {/* Sello aduanero ghost — derecha. Decorativo, pero su <text> interno
+          lo leían los lectores de pantalla como contenido real. */}
+      <div
+        aria-hidden="true"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none"
+        style={{ opacity: 0.10 }}
+      >
         <svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Anillo exterior */}
           <circle cx="240" cy="240" r="230" stroke="white" strokeWidth="3"/>

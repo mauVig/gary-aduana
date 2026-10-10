@@ -11,6 +11,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const [lenis, setLenis] = useState<Lenis | null>(null)
 
   useEffect(() => {
+    // WCAG 2.3.3: con movimiento reducido no se instancia Lenis. El scroll
+    // vuelve a ser el nativo del navegador y la barra nativa reaparece
+    // (globals.css solo la oculta cuando no hay esa preferencia).
+    const prefiereMenosMovimiento = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
+    if (prefiereMenosMovimiento) return
+
     const instance = new Lenis({
       lerp: 0.03,
       smoothWheel: true,

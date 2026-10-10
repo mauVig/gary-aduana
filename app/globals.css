@@ -12,11 +12,17 @@
 
 html {
   scroll-behavior: auto;
+  /* El header es fijo: sin esto, al saltar a un ancla el destino queda tapado */
+  scroll-padding-top: 6rem;
 }
 
-/* Hide native scrollbar — replaced by custom Lenis scrollbar */
-html::-webkit-scrollbar { display: none; }
-html { scrollbar-width: none; -ms-overflow-style: none; }
+/* Oculta la barra nativa — la reemplaza la barra personalizada de Lenis.
+   Solo cuando el scroll suave está activo: con movimiento reducido no
+   montamos Lenis ni la barra personalizada, así que la nativa debe volver. */
+@media (prefers-reduced-motion: no-preference) {
+  html::-webkit-scrollbar { display: none; }
+  html { scrollbar-width: none; -ms-overflow-style: none; }
+}
 
 @layer base {
   body {
@@ -38,6 +44,28 @@ html { scrollbar-width: none; -ms-overflow-style: none; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
+/* Fade sin desplazamiento — para paneles a sangre completa */
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.reveal-fade.visible {
+  opacity: 1;
+}
+
+/* Reveal en grupo: el contenedor dispara, los hijos escalonan */
+.reveal-group .reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-group.visible .reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* Marquee */
 .marquee-wrapper {
@@ -121,4 +149,120 @@ input:focus, select:focus, textarea:focus {
 .btn-outline:hover {
   background: white;
   color: var(--navy);
+}
+
+/* HowItWorks — numeración que se pinta al hacer scroll */
+.step-num {
+  color: rgba(255, 255, 255, 0.15);
+  transition: color 0.5s ease;
+}
+.step-row.visible .step-num {
+  color: #fc7114;
+}
+.step-bar {
+  width: 0;
+  transition: width 0.55s ease 0.1s;
+}
+.step-row.visible .step-bar {
+  width: 2rem;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   ACCESIBILIDAD
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* --- Indicador de foco ---------------------------------------------------
+   No había ninguno: sobre los fondos navy el outline por defecto del
+   navegador es prácticamente invisible. Se usa :focus-visible para que
+   aparezca con teclado pero no al hacer clic con el mouse. */
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* Sobre fondos claros el naranja sobre blanco no llega a 3:1, así que se
+   le agrega un halo oscuro que garantiza el contraste en ambos casos. */
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(13, 35, 64, 0.35);
+}
+
+/* --- Saltar al contenido -------------------------------------------------
+   Invisible hasta que recibe foco con Tab. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 10000;
+  padding: 0.85rem 1.4rem;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.18s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* --- Respaldo sin JavaScript ---------------------------------------------
+   Los elementos .reveal arrancan en opacity:0 y solo el observador de JS
+   los muestra. Si el script no corre, el contenido no aparecería nunca. */
+.no-js .reveal,
+.no-js .reveal-fade,
+.no-js .reveal-group .reveal-item,
+.no-js .step-num,
+.no-js .step-bar {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.no-js .step-num { color: var(--orange) !important; }
+.no-js .step-bar { width: 2rem !important; }
+
+/* --- Movimiento reducido -------------------------------------------------
+   WCAG 2.3.3. El sitio tiene scroll suave muy lento, marquesina infinita,
+   zoom ×9 atado al scroll y animaciones de aparición. Con esta preferencia
+   todo se muestra en su estado final, sin transición. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal,
+  .reveal-fade,
+  .reveal-group .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .step-num { color: var(--orange) !important; }
+  .step-bar { width: 2rem !important; }
+
+  /* La marquesina de clientes deja de desplazarse sola */
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* --- Acordeón ------------------------------------------------------------
+   El panel cerrado seguía en el árbol de accesibilidad y era tabulable
+   aunque estuviera oculto. `visibility: hidden` lo saca de ambos.
+   El max-height pasa de 400px a 60rem: las respuestas largas se truncaban. */
+.accordion-content {
+  visibility: hidden;
+}
+.accordion-content.open {
+  visibility: visible;
+  max-height: 60rem;
 }

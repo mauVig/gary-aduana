@@ -3,7 +3,7 @@
 Registro de todo lo que falta completar en el sitio y que **no se puede resolver
 desde el código**: depende de datos reales del estudio.
 
-Última actualización: 9 de octubre de 2026
+Última actualización: 13 de octubre de 2026
 
 ---
 
@@ -16,12 +16,18 @@ lugar de inventarlos.
 **Dónde se completan:** constante `RESPONSABLE` al principio de
 [`app/privacidad/page.tsx`](app/privacidad/page.tsx). Un solo lugar.
 
-| Dato | Estado | Para qué |
-|---|---|---|
-| Razón social completa (S.A. / S.R.L. / unipersonal) | ❌ Falta | Identificar al responsable de la base |
-| CUIT | ❌ Falta | Identificar al responsable de la base |
-| Domicilio legal completo (calle, nº, piso, CP, localidad, provincia) | ❌ Falta | Exigido por el art. 6 de la Ley 25.326 |
-| Teléfono de contacto | ❌ Falta | Canal alternativo para ejercer derechos |
+**✅ COMPLETADO el 13 de octubre de 2026.**
+
+El responsable es una **persona humana**, no una sociedad. La Ley 25.326 lo admite
+expresamente (art. 2, «persona física o de existencia ideal») y en este rubro es lo
+habitual, porque la matrícula de despachante se le otorga a una persona.
+
+| Dato | Estado |
+|---|---|
+| Titular | ✅ Guillermo Damián Gary — «Estudio Aduanero Gary» es el nombre de fantasía |
+| CUIT | ✅ 20-20526819-8 — dígito verificador validado |
+| Domicilio | ✅ Venezuela 634, piso 6, depto 27 — C1095 CABA |
+| Teléfono | ✅ +54 9 11 3438-5230 |
 
 ### Además, fuera del sitio
 
@@ -45,14 +51,14 @@ grande: un despachante de aduana sin teléfono visible pierde llamadas.
 
 | Dato | Estado |
 |---|---|
-| Teléfono fijo y/o celular | ❌ Falta |
-| WhatsApp de atención | ❌ Falta |
-| Dirección física completa | ❌ Falta |
-| Coordenadas geográficas (lat/long) | ❌ Falta |
+| Teléfono fijo y/o celular | ✅ Cargado — visible en el pie y en `/contacto` |
+| WhatsApp de atención | ❓ **Sin confirmar** — el número es un celular, pero nadie dijo si atienden WhatsApp ahí |
+| Dirección física completa | ✅ Cargada en el marcado `LocalBusiness` |
+| Coordenadas geográficas (lat/long) | ❌ Falta — solo hacen falta si quieren aparecer en el mapa |
 | **Número de matrícula de despachante ante ARCA** | ❌ Falta — el sitio afirma tener la credencial pero nunca da el número |
 | Email con dominio propio (hoy es un Gmail) | ❌ Falta |
 | Perfil de LinkedIn (relevante por ser B2B) | ❌ Falta |
-| Horario de atención confirmado | ⚠️ Está en `/contacto` pero no en el pie |
+| Horario de atención | ✅ Confirmado — en `/contacto` y en la política de privacidad |
 
 ---
 

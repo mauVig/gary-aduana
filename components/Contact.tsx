@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Mail, MapPin, Send, Paperclip, Loader2, AlertCircle } from 'lucide-react'
+import { Mail, MapPin, Phone, Send, Paperclip, Loader2, AlertCircle } from 'lucide-react'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { esServicioValido } from '@/lib/servicios'
 
@@ -151,6 +151,7 @@ export default function Contact() {
               <h3 className="text-white font-semibold text-lg mb-5">Datos de contacto</h3>
               <div className="space-y-4">
                 {[
+                  { icon: Phone, label: 'Teléfono', value: '+54 9 11 3438-5230', href: 'tel:+5491134385230' },
                   { icon: Mail, label: 'Email', value: 'despachantegary@gmail.com', href: 'mailto:despachantegary@gmail.com' },
                   { icon: MapPin, label: 'Ubicación', value: 'Buenos Aires, Argentina', href: undefined },
                 ].map(({ icon: Icon, label, value, href }) => (

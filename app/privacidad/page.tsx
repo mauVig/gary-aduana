@@ -5,24 +5,27 @@ import PageBanner from '@/components/PageBanner'
 import FooterParallax from '@/components/FooterParallax'
 
 /* ──────────────────────────────────────────────────────────────────────────
-   DATOS DEL RESPONSABLE DE LA BASE  ·  PENDIENTE DE COMPLETAR
+   DATOS DEL RESPONSABLE DE LA BASE
 
    La Ley 25.326 exige identificar al responsable de la base de datos con su
-   denominación y domicilio. Mientras falten, la página se renderiza sin esas
-   líneas en lugar de mostrar datos inventados.
+   denominación y domicilio, y admite expresamente que sea una «persona física»
+   (art. 2). Acá el responsable es una persona humana, no una sociedad: por eso
+   va `titular` con nombre y apellido, y no una razón social.
 
-   TODO: completar con los datos reales del estudio. Ver PENDIENTES.md.
+   «Estudio Aduanero Gary» es el nombre de fantasía bajo el que opera.
    ────────────────────────────────────────────────────────────────────────── */
 const RESPONSABLE = {
   nombre: 'Estudio Aduanero Gary',
-  razonSocial: null as string | null, // TODO: razón social completa (S.A. / S.R.L. / unipersonal)
-  cuit: null as string | null, // TODO: CUIT
-  domicilio: null as string | null, // TODO: domicilio legal completo (calle, nº, piso, CP, localidad, provincia)
+  titular: 'Guillermo Damián Gary',
+  cuit: '20-20526819-8',
+  domicilio: 'Venezuela 634, piso 6, departamento 27 — C1095 Ciudad Autónoma de Buenos Aires',
   email: 'despachantegary@gmail.com',
-  telefono: null as string | null, // TODO: teléfono de contacto
+  telefono: '+54 9 11 3438-5230',
+  telefonoLink: '+5491134385230',
+  horario: 'Lunes a viernes de 9:00 a 18:00 h',
 }
 
-const ULTIMA_ACTUALIZACION = '9 de octubre de 2026'
+const ULTIMA_ACTUALIZACION = '13 de octubre de 2026'
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad',
@@ -78,17 +81,16 @@ export default function PrivacidadPage() {
 
           <Seccion n="01" titulo="Quiénes somos">
             <p>
-              {RESPONSABLE.nombre}
-              {RESPONSABLE.razonSocial ? ` (${RESPONSABLE.razonSocial})` : ''} es
-              responsable del tratamiento de los datos personales que se recolectan
-              a través de este sitio web.
+              <strong className="text-slate-800">{RESPONSABLE.titular}</strong>, que
+              opera bajo el nombre de fantasía {RESPONSABLE.nombre}, es responsable
+              del tratamiento de los datos personales que se recolectan a través de
+              este sitio web.
             </p>
-            {(RESPONSABLE.cuit || RESPONSABLE.domicilio) && (
-              <ul className="list-disc pl-5 space-y-1">
-                {RESPONSABLE.cuit && <li>CUIT: {RESPONSABLE.cuit}</li>}
-                {RESPONSABLE.domicilio && <li>Domicilio: {RESPONSABLE.domicilio}</li>}
-              </ul>
-            )}
+            <ul className="list-disc pl-5 space-y-1">
+              <li>CUIT: {RESPONSABLE.cuit}</li>
+              <li>Domicilio: {RESPONSABLE.domicilio}</li>
+              <li>Horario de atención: {RESPONSABLE.horario}</li>
+            </ul>
             <p>
               Podés contactarnos por cualquier cuestión relativa a tus datos
               personales escribiendo a{' '}
@@ -98,8 +100,16 @@ export default function PrivacidadPage() {
                 style={{ color: '#15355c' }}
               >
                 {RESPONSABLE.email}
+              </a>{' '}
+              o llamando al{' '}
+              <a
+                href={`tel:${RESPONSABLE.telefonoLink}`}
+                className="font-semibold underline"
+                style={{ color: '#15355c' }}
+              >
+                {RESPONSABLE.telefono}
               </a>
-              {RESPONSABLE.telefono ? ` o llamando al ${RESPONSABLE.telefono}` : ''}.
+              .
             </p>
           </Seccion>
 
@@ -163,6 +173,52 @@ export default function PrivacidadPage() {
               compañía de transporte o los organismos públicos intervinientes como
               la Aduana, ARCA, SENASA o ANMAT— o cuando una norma legal o una orden
               judicial nos obligue a hacerlo.
+            </p>
+
+            <h3 className="text-base font-bold text-slate-900 pt-3">
+              Proveedores tecnológicos
+            </h3>
+            <p>
+              Para que este sitio funcione nos apoyamos en dos proveedores que
+              procesan datos únicamente por nuestra cuenta y siguiendo nuestras
+              instrucciones, sin usarlos para fines propios:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong className="text-slate-800">Vercel Inc.</strong> — alojamiento
+                del sitio web.
+              </li>
+              <li>
+                <strong className="text-slate-800">Resend</strong> — envío de los
+                correos que genera el formulario de contacto, incluidos los archivos
+                que adjuntes.
+              </li>
+            </ul>
+
+            <h3 className="text-base font-bold text-slate-900 pt-3">
+              Transferencia internacional de datos
+            </h3>
+            <p>
+              Ambos proveedores tienen sus servidores fuera de la Argentina,
+              principalmente en los Estados Unidos. Eso significa que{' '}
+              <strong className="text-slate-800">
+                al enviar el formulario tus datos se transfieren y almacenan en el
+                exterior
+              </strong>
+              , en los términos del artículo 12 de la Ley 25.326.
+            </p>
+            <p>
+              Al completar y enviar el formulario prestás tu consentimiento para esa
+              transferencia. Si preferís evitarla, podés contactarnos directamente
+              por teléfono al{' '}
+              <a
+                href={`tel:${RESPONSABLE.telefonoLink}`}
+                className="font-semibold underline"
+                style={{ color: '#15355c' }}
+              >
+                {RESPONSABLE.telefono}
+              </a>
+              .
             </p>
           </Seccion>
 

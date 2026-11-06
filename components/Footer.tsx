@@ -1,4 +1,4 @@
-import { Mail } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 import Link from 'next/link'
 
 const navLinks = [
@@ -27,13 +27,22 @@ export default function Footer() {
               Estudio Aduanero con más de 30 años de experiencia en comercio exterior.
               Socios Vitalicios del CDA. Buenos Aires, Argentina.
             </p>
-            <a
-              href="mailto:despachantegary@gmail.com"
-              className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
-            >
-              <Mail size={15} style={{ color: '#fc7114' }} />
-              despachantegary@gmail.com
-            </a>
+            <div className="flex flex-col gap-3">
+              <a
+                href="tel:+5491134385230"
+                className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+              >
+                <Phone size={15} style={{ color: '#fc7114' }} aria-hidden="true" />
+                +54 9 11 3438-5230
+              </a>
+              <a
+                href="mailto:despachantegary@gmail.com"
+                className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+              >
+                <Mail size={15} style={{ color: '#fc7114' }} aria-hidden="true" />
+                despachantegary@gmail.com
+              </a>
+            </div>
           </div>
 
           {/* Navigation */}

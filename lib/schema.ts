@@ -12,6 +12,9 @@ export const SITE_URL =
 
 const NAME = 'Estudio Aduanero Gary'
 const EMAIL = 'despachantegary@gmail.com'
+/** Formato E.164, que es el que esperan los buscadores. */
+const TELEFONO = '+5491134385230'
+const TITULAR = 'Guillermo Damián Gary'
 
 export const organizationSchema = {
   '@context': 'https://schema.org',
@@ -24,13 +27,17 @@ export const organizationSchema = {
     url: `${SITE_URL}/logo.svg`,
   },
   email: EMAIL,
+  telephone: TELEFONO,
+  founder: {
+    '@type': 'Person',
+    name: TITULAR,
+  },
   foundingDate: '1994',
   areaServed: {
     '@type': 'Country',
     name: 'Argentina',
   },
-  // TODO(datos del cliente): descomentar cuando estén confirmados
-  // telephone: '+54 11 ...',
+  // TODO(datos del cliente): perfil de LinkedIn
   // sameAs: ['https://www.linkedin.com/company/...'],
 } as const
 
@@ -46,11 +53,14 @@ export const localBusinessSchema = {
     'Estudio de despachantes de aduana en Buenos Aires. Importación, exportación, clasificación arancelaria, despacho aduanero y logística internacional.',
   foundingDate: '1994',
   priceRange: '$$',
+  telephone: TELEFONO,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Buenos Aires',
+    streetAddress: 'Venezuela 634, piso 6, departamento 27',
+    postalCode: 'C1095',
+    addressLocality: 'Ciudad Autónoma de Buenos Aires',
+    addressRegion: 'CABA',
     addressCountry: 'AR',
-    // TODO(datos del cliente): streetAddress, postalCode, addressRegion
   },
   areaServed: {
     '@type': 'Country',
@@ -70,8 +80,8 @@ export const localBusinessSchema = {
       closes: '18:00',
     },
   ],
-  // TODO(datos del cliente): estos tres son los que más pesan para búsqueda local
-  // telephone: '+54 11 ...',
+  // TODO(datos del cliente): falta la matrícula, que es el eje de confianza
+  // del sitio, y las coordenadas para el mapa.
   // geo: { '@type': 'GeoCoordinates', latitude: ..., longitude: ... },
   // hasCredential: 'Matrícula de Despachante de Aduana ARCA N° ...',
 } as const
